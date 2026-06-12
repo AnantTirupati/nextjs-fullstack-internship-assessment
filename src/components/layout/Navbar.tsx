@@ -37,7 +37,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <Link href="/" className="navbar-brand">
-        <span className="gradient-text">InternShip</span>
+        <span className="gradient-text">PrimeTradeAI</span>
       </Link>
 
       {/* Desktop links */}

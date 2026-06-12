@@ -2,8 +2,8 @@ export function getSwaggerSpec() {
   return {
     openapi: '3.0.3',
     info: {
-      title: 'InternShip API',
-      description: 'Full-Stack Internship Assessment API — Authentication, RBAC, and Product Management',
+      title: 'PrimeTradeAI API',
+      description: 'Full-Stack PrimeTradeAI Platform API — Authentication, RBAC, and Product Management',
       version: '1.0.0',
       contact: {
         name: 'API Support',

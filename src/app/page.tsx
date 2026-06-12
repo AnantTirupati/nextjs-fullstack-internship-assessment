@@ -285,7 +285,7 @@ export default function HomePage() {
           fontSize: '0.875rem',
         }}
       >
-        <p>Built with ❤️ for the Full-Stack Internship Assessment</p>
+        <p>Built with ❤️ for the PrimeTradeAI Platform</p>
       </footer>
     </div>
   );

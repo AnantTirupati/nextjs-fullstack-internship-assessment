@@ -12,10 +12,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "InternShip — Full-Stack Assessment",
+  title: "PrimeTradeAI — Full-Stack Platform",
   description: "A production-ready full-stack application with Next.js 15, MongoDB, JWT authentication, RBAC, and comprehensive product management.",
   keywords: ["Next.js", "MongoDB", "Full-Stack", "JWT", "Authentication", "Product Management"],
-  authors: [{ name: "InternShip Assessment" }],
+  authors: [{ name: "PrimeTradeAI Platform" }],
 };
 
 export default function RootLayout({
