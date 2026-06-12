@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'swagger-ui-react/swagger-ui.css';
 
@@ -14,6 +15,24 @@ const SwaggerUI = dynamic(() => import('swagger-ui-react'), {
 });
 
 export default function DocsPage() {
+  useEffect(() => {
+    // Suppress legacy lifecycle warnings from the third-party swagger-ui-react package
+    const originalError = console.error;
+    console.error = (...args) => {
+      if (
+        args[0] &&
+        typeof args[0] === 'string' &&
+        (args[0].includes('UNSAFE_componentWillReceiveProps') || args[0].includes('componentWillReceiveProps'))
+      ) {
+        return;
+      }
+      originalError(...args);
+    };
+    return () => {
+      console.error = originalError;
+    };
+  }, []);
+
   return (
     <div style={{ backgroundColor: '#fafafa', minHeight: '100vh', padding: '24px 12px' }}>
       <div
