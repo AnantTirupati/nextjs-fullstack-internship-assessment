@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import logger from '@/utils/logger';
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
@@ -13,7 +14,6 @@ interface MongooseCache {
 
 // Extend global to cache the connection across hot reloads in development
 declare global {
-  // eslint-disable-next-line no-var
   var mongooseCache: MongooseCache | undefined;
 }
 
@@ -35,7 +35,7 @@ async function connectDB(): Promise<typeof mongoose> {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      console.log('✅ MongoDB connected successfully');
+      logger.info('MongoDB connected successfully');
       return mongooseInstance;
     });
   }
@@ -44,7 +44,7 @@ async function connectDB(): Promise<typeof mongoose> {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    console.error('❌ MongoDB connection error:', e);
+    logger.error('MongoDB connection error:', e);
     throw e;
   }
 

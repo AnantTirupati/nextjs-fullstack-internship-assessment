@@ -163,10 +163,12 @@ npx tsx seed.ts
 
 ---
 
-## 📖 API Documentation
-
 ### Swagger/OpenAPI
-- **JSON Spec**: [http://localhost:3000/api/v1/docs](http://localhost:3000/api/v1/docs)
+- **Interactive UI Docs**: [http://localhost:3000/docs](http://localhost:3000/docs)
+- **JSON Specification**: [http://localhost:3000/api/v1/docs](http://localhost:3000/api/v1/docs)
+
+### Health Check
+- **API Status Check**: [http://localhost:3000/api/v1/health](http://localhost:3000/api/v1/health)
 
 ### Postman Collection
 1. Import `docs/postman-collection.json` into Postman

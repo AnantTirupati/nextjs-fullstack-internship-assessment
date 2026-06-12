@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
 import { AppError } from './errors';
+import logger from './logger';
 
-export function successResponse<T>(data: T, message: string = 'Operation successful', status: number = 200) {
+export function successResponse<T>(
+  data: T,
+  message: string = 'Operation successful',
+  status: number = 200,
+  meta?: Record<string, unknown>
+) {
   return NextResponse.json(
     {
       success: true,
       message,
       data,
+      ...(meta ? { pagination: meta } : {}),
     },
     { status }
   );
@@ -24,7 +31,7 @@ export function errorResponse(error: unknown) {
     );
   }
 
-  console.error('Unhandled error:', error);
+  logger.error('Unhandled error:', error);
 
   return NextResponse.json(
     {

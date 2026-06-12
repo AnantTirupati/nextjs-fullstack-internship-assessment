@@ -14,15 +14,7 @@ export async function GET(request: NextRequest) {
 
     const result = await getProducts(query);
 
-    return Response.json(
-      {
-        success: true,
-        message: 'Products fetched successfully',
-        data: result.products,
-        pagination: result.pagination,
-      },
-      { status: 200 }
-    );
+    return successResponse(result.products, 'Products fetched successfully', 200, result.pagination);
   } catch (error) {
     return errorResponse(error);
   }

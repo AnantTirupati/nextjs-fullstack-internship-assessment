@@ -78,8 +78,7 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const User: Model<any> =
-  mongoose.models.User || mongoose.model('User', UserSchema);
+const User: Model<IUserDocument> =
+  mongoose.models.User || mongoose.model<IUserDocument>('User', UserSchema);
 
 export default User;

@@ -76,11 +76,13 @@ ProductSchema.index({ category: 1 });
 // Index for price range queries
 ProductSchema.index({ price: 1 });
 
+// Index for default pagination sorting (newest first)
+ProductSchema.index({ createdAt: -1 });
+
 // Compound index for created by and date
 ProductSchema.index({ createdBy: 1, createdAt: -1 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Product: Model<any> =
-  mongoose.models.Product || mongoose.model('Product', ProductSchema);
+const Product: Model<IProductDocument> =
+  mongoose.models.Product || mongoose.model<IProductDocument>('Product', ProductSchema);
 
 export default Product;

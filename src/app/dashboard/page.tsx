@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
@@ -10,7 +10,7 @@ export default function DashboardPage() {
   const { user, isAuthenticated, isAdmin, isLoading: authLoading } = useAuth();
   const { fetchProducts, pagination } = useProducts();
   const router = useRouter();
-  const [stats, setStats] = useState({ totalProducts: 0, categories: 0 });
+
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -31,11 +31,7 @@ export default function DashboardPage() {
     }
   }, [isAuthenticated, fetchProducts]);
 
-  useEffect(() => {
-    if (pagination) {
-      setStats((prev) => ({ ...prev, totalProducts: pagination.total }));
-    }
-  }, [pagination]);
+
 
   if (authLoading) {
     return (
@@ -92,7 +88,7 @@ export default function DashboardPage() {
         <div className="stat-card animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'both' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
-              <div className="stat-value" style={{ color: 'var(--color-primary)' }}>{stats.totalProducts}</div>
+              <div className="stat-value" style={{ color: 'var(--color-primary)' }}>{pagination?.total ?? 0}</div>
               <div className="stat-label">Total Products</div>
             </div>
             <div style={{ fontSize: '2rem', opacity: 0.6 }}>📦</div>
@@ -132,7 +128,7 @@ export default function DashboardPage() {
               ➕ Add New Product
             </Link>
           )}
-          <Link href="/api/v1/docs" className="btn btn-ghost" target="_blank">
+          <Link href="/docs" className="btn btn-ghost" target="_blank">
             📖 API Docs
           </Link>
         </div>

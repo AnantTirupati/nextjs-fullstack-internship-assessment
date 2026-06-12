@@ -45,20 +45,6 @@ export default function NewProductPage() {
   }, [authLoading, isAuthenticated, isAdmin, router]);
 
   const onSubmit = async (data: ProductFormData) => {
-    // Client-side validation
-    if (!data.title || data.title.length < 2) {
-      toast.error('Title must be at least 2 characters');
-      return;
-    }
-    if (!data.description) {
-      toast.error('Description is required');
-      return;
-    }
-    if (!data.category) {
-      toast.error('Category is required');
-      return;
-    }
-
     setIsLoading(true);
     try {
       await createProduct({

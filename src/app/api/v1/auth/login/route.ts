@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { cookies } from 'next/headers';
 import { loginUser } from '@/services/auth.service';
 import { validateBody } from '@/middleware/validate';
 import { loginSchema } from '@/validators/auth';
@@ -15,6 +16,24 @@ export async function POST(request: NextRequest) {
     const validated = validateBody(loginSchema, body);
 
     const result = await loginUser(validated);
+
+    // Set HTTP-only cookies
+    const cookieStore = await cookies();
+    cookieStore.set('accessToken', result.tokens.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 15 * 60, // 15 minutes
+    });
+
+    cookieStore.set('refreshToken', result.tokens.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
 
     return successResponse(result, 'Login successful');
   } catch (error) {

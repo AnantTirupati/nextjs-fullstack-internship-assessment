@@ -108,6 +108,15 @@ export async function refreshTokens(currentRefreshToken: string) {
   }
 
   const user = await User.findById(decoded.userId).select('+refreshToken');
+  
+  // Reuse detection: If user has a refresh token but it doesn't match the one supplied,
+  // it might have been stolen or already used. Clear the token to force log out of all sessions.
+  if (user && user.refreshToken && user.refreshToken !== currentRefreshToken) {
+    user.refreshToken = undefined;
+    await user.save();
+    throw new UnauthorizedError('Refresh token reuse detected. Access revoked.');
+  }
+
   if (!user || user.refreshToken !== currentRefreshToken) {
     throw new UnauthorizedError('Invalid refresh token');
   }
