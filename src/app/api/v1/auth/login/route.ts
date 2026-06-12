@@ -19,9 +19,11 @@ export async function POST(request: NextRequest) {
 
     // Set HTTP-only cookies
     const cookieStore = await cookies();
+    const isSecure = process.env.NODE_ENV === 'production' && !request.nextUrl.hostname.includes('localhost');
+    
     cookieStore.set('accessToken', result.tokens.accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecure,
       sameSite: 'lax',
       path: '/',
       maxAge: 15 * 60, // 15 minutes
@@ -29,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     cookieStore.set('refreshToken', result.tokens.refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecure,
       sameSite: 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60, // 7 days
